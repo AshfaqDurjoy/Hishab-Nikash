@@ -8,30 +8,42 @@
 
 1. **Tanzila Tabassum Ahona**  
    Role: Team Lead  
-   Email: [tanzila.cse.20220204006@aust.edu] (mailto:tanzila.cse.20220204093@aust.edu)  
+   Email: [tanzila.cse.20220204006@aust.edu](mailto:tanzila.cse.20220204006@aust.edu)  
+
    Student ID: 20220204006  
+   
    WakaTime:
+
    [![wakatime](https://wakatime.com/badge/user/80bd1b86-97cf-40c3-81ac-f9096f06d784/project/c4699f85-33e5-4452-adea-680fb4abd502.svg)](https://wakatime.com/badge/user/80bd1b86-97cf-40c3-81ac-f9096f06d784/project/c4699f85-33e5-4452-adea-680fb4abd502)
 
 2. **Mohammad Ashfaq Hossain Bhuiyan Durjoy**  
    Role: Frontend & Backend Developer  
    Email: [ashfaq.cse.20220204002@aust.edu](mailto:ashfaq.cse.20220204002@aust.edu)  
+
    Student ID: 20220204002 
+   
    WakaTime: 
+
    [![wakatime](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3.svg)](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3)
 
 3. **Zarin Tasnim Fema**  
    Role: Frontend & Backend Developer  
    Email: [zarin.cse.20220204013@aust.edu](mailto:zarin.cse.20220204013@aust.edu)  
+
    Student ID: 20220204013 
+   
    WakaTime: 
+
    [![wakatime](https://wakatime.com/badge/user/baeb9d4d-44b4-4eb7-aad7-9fa52e91b70d/project/cdc39905-158d-4968-b3bb-f6018a2fbfc8.svg)](https://wakatime.com/badge/user/baeb9d4d-44b4-4eb7-aad7-9fa52e91b70d/project/cdc39905-158d-4968-b3bb-f6018a2fbfc8)
 
 4. **Anupoma Haque Anika**  
    Role: Frontend & Backend Developer  
    Email: [anupoma.cse.20220204015@aust.edu](mailto:anupoma.cse.20220204015@aust.edu)  
+
    Student ID: 20220204015
+   
    WakaTime: 
+   
    [![wakatime](https://wakatime.com/badge/user/4fa9f674-c05d-4479-9ce8-7b819ad5992b/project/e106f86d-2949-4347-b898-963c51145662.svg)](https://wakatime.com/badge/user/4fa9f674-c05d-4479-9ce8-7b819ad5992b/project/e106f86d-2949-4347-b898-963c51145662)
 
 
