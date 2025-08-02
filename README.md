@@ -8,7 +8,7 @@
 
 1. **Tanzila Tabassum Ahona**  
    Role: Team Lead  
-   Email: [tanzila.cse.20220204006@aust.edu] (mailto:shahid.cse.20220204093@aust.edu)  
+   Email: [tanzila.cse.20220204006@aust.edu] (mailto:tanzila.cse.20220204093@aust.edu)  
    Student ID: 20220204006  
    WakaTime:
    [![wakatime](https://wakatime.com/badge/user/80bd1b86-97cf-40c3-81ac-f9096f06d784/project/c4699f85-33e5-4452-adea-680fb4abd502.svg)](https://wakatime.com/badge/user/80bd1b86-97cf-40c3-81ac-f9096f06d784/project/c4699f85-33e5-4452-adea-680fb4abd502)
