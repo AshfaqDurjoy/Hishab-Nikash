@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // For routing
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; 
 import AppSidebar from "./Components/AppSidebar";
 import Topbar from "./Components/Topbar";
 import Dashboard from "./Pages/Dashboard"; 
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState("dashboard"); // Default page is dashboard
+  const [currentPage, setCurrentPage] = useState("dashboard"); 
 
   return (
     <Router>
