@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -31,5 +32,36 @@ function App() {
     </>
   )
 }
+=======
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // For routing
+import AppSidebar from "./Components/AppSidebar";
+import Topbar from "./Components/Topbar";
+import Dashboard from "./Pages/Dashboard"; // Importing Dashboard
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState("dashboard"); // Default page is dashboard
+
+  return (
+    <Router>
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+
+          {/* Route Switch */}
+          <Routes>
+            {/* Default route to the Dashboard */}
+            <Route path="/" element={<Dashboard />} />
+            {/* Add other routes as necessary */}
+            {/* <Route path="/transactions" element={<Transactions />} /> */}
+            {/* <Route path="/reports" element={<Reports />} /> */}
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+};
+>>>>>>> Stashed changes
 
 export default App
