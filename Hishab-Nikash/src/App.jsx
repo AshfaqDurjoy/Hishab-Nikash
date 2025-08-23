@@ -8,6 +8,9 @@ import TransactionPage from "./Pages/TransactionPage";
 import Report from "./Pages/Report";
 import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
+
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard"); 
 
@@ -26,7 +29,12 @@ const App = () => {
                     <Route path="/report" element={<Report/>} />
                      <Route path="/profile" element={<Profile/>} />
                       <Route path="/settings" element={<Settings/>} />
+
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+
           </Routes>
+
         </div>
       </div>
     </Router>
