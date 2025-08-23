@@ -1,6 +1,12 @@
-import React from 'react';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 const AppSidebar = () => {
+  const linkClass = ({ isActive }) =>
+    `block mb-4 px-2 py-1 rounded-md ${
+      isActive ? "bg-gray-700 text-white font-bold" : "text-gray-300 hover:bg-gray-700 hover:text-white"
+    }`;
+
   return (
     <div className="bg-gray-800 text-white w-64 h-full fixed top-0 left-0 p-4 flex flex-col">
       <div className="flex flex-col items-start mb-8">
@@ -9,35 +15,35 @@ const AppSidebar = () => {
       </div>
 
       <ul className="flex-1">
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
+        <li>
+          <NavLink to="/" className={linkClass}>
             Dashboard
-          </a>
+          </NavLink>
         </li>
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
-            Transactions
-          </a>
+        <li>
+          <NavLink to="/transactionPage" className={linkClass}>
+            Transaction
+          </NavLink>
         </li>
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
-            Reports
-          </a>
+        <li>
+          <NavLink to="/report" className={linkClass}>
+            Report
+          </NavLink>
         </li>
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
+        <li>
+          <NavLink to="/budget" className={linkClass}>
             Budget
-          </a>
+          </NavLink>
         </li>
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
+        <li>
+          <NavLink to="/profile" className={linkClass}>
             Profile
-          </a>
+          </NavLink>
         </li>
-        <li className="mb-4">
-          <a href="#" className="hover:text-gray-400">
+        <li>
+          <NavLink to="/settings" className={linkClass}>
             Settings
-          </a>
+          </NavLink>
         </li>
       </ul>
 
