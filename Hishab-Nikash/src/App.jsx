@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppSidebar from "./Components/AppSidebar";
 import Topbar from "./Components/Topbar";
 import Dashboard from "./Pages/Dashboard"; 
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard"); 
@@ -16,7 +18,10 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
+
         </div>
       </div>
     </Router>
