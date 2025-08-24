@@ -18,23 +18,35 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsBlinking(true);
+  setTimeout(() => setIsBlinking(false), 300);
 
-        console.log("Login Data:", formData);
+  try {
+    const res = await fetch(`${API_BASE}/api/login.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
 
-        setIsBlinking(true) ; 
-        setTimeout( () => setIsBlinking(false),300);
+    if (!res.ok || !data.ok) {
+      alert(data.error || "Login failed");
+      return;
+    }
 
-        alert("Login Done!");
-
-        setFormData({
-            email: "",
-            password: "",
-        });
-
-        navigate("/");
-    };
+    localStorage.setItem("hn_token", data.token);
+    localStorage.setItem("hn_user", JSON.stringify(data.user));
+    alert("Login Done!");
+    setFormData({ email: "", password: "" });
+    navigate("/");
+  } catch (err) {
+    console.error(err);
+    alert("Network error");
+  }
+};
     return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8">
