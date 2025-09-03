@@ -28,7 +28,7 @@ const transactions = [
   },
 ];
 
-// Map category to Tailwind color classes for icons
+
 const categoryColorClass = {
   Grocery: "bg-green-500",
   Milk: "bg-yellow-500",
@@ -55,8 +55,7 @@ const TransactionCard = () => {
       <div className="mt-8 max-h-[500px] overflow-y-auto">
         {transactions.map((transaction) => {
           const bgClass = categoryColorClass[transaction.category] || "bg-gray-500";
-          
-          // Determine amount color
+
           const amountColor = transaction.amount.startsWith("-") ? "text-red-500" : "text-green-500";
 
           return (
@@ -64,7 +63,6 @@ const TransactionCard = () => {
               key={transaction.id}
               className="bg-white shadow-lg rounded-lg p-4 mb-4 flex items-center justify-between hover:shadow-xl transition-shadow"
             >
-              {/* Left: Icon + Name + Timestamp */}
               <div className="flex items-center space-x-4">
                 <div className={`w-10 h-10 rounded-full ${bgClass} flex items-center justify-center`}>
                   <span className="text-white font-bold">{transaction.type[0]}</span>
@@ -74,10 +72,9 @@ const TransactionCard = () => {
                   <div className="text-sm text-gray-500">{transaction.timestamp}</div>
                 </div>
               </div>
-
-              {/* Right: Amount with Taka sign and color */}
+              
               <div className={`font-semibold ${amountColor}`}>
-                ৳{transaction.amount.replace("+","").replace("-","")}
+                ৳{transaction.amount}
               </div>
             </div>
           );
