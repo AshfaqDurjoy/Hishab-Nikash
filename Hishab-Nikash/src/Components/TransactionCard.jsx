@@ -1,56 +1,87 @@
 import React from "react";
-/*
-// Transaction data moved here for rendering
+
+// Sample transactions
 const transactions = [
   {
     id: 1,
-    name: "Salary Deposit",
-    amount: "+5000",
-    timestamp: "Today, 9:00 AM",
-    type: "Salary",
-    category: "green",
+    name: "Grocery shopping",
+    type: "Debit",
+    category: "Grocery",
+    amount: "-1500",
+    timestamp: "2025-09-04 10:30 AM",
   },
   {
     id: 2,
-    name: "Grocery Shopping",
-    amount: "-250",
-    timestamp: "Yesterday, 6:30 PM",
-    type: "Shopping",
-    category: "purple",
+    name: "Salary",
+    type: "Credit",
+    category: "Income",
+    amount: "+50000",
+    timestamp: "2025-09-01 09:00 AM",
   },
-  // Add more transactions as needed...
-];*/
+  {
+    id: 3,
+    name: "Internet Bill",
+    type: "Debit",
+    category: "Internet",
+    amount: "-1200",
+    timestamp: "2025-09-02 03:00 PM",
+  },
+];
+
+// Map category to Tailwind color classes for icons
+const categoryColorClass = {
+  Grocery: "bg-green-500",
+  Milk: "bg-yellow-500",
+  Internet: "bg-blue-500",
+  "Gas Filling": "bg-orange-500",
+  Electricity: "bg-purple-500",
+  Water: "bg-cyan-500",
+  Rent: "bg-rose-500",
+  "Phone Bill": "bg-indigo-500",
+  "Dining Out": "bg-pink-500",
+  Entertainment: "bg-violet-500",
+  Healthcare: "bg-teal-500",
+  Transportation: "bg-amber-500",
+  Clothing: "bg-lime-500",
+  Insurance: "bg-fuchsia-500",
+  Education: "bg-sky-500",
+  Others: "bg-gray-500",
+  Income: "bg-emerald-500",
+};
 
 const TransactionCard = () => {
   return (
     <div className="max-w-5xl mx-auto p-8">
-      {/* Transactions Section */}
-      <div className="mt-8">
-        {transactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="bg-white shadow-lg rounded-lg p-4 mb-4 flex items-center justify-between"
-          >
-            <div className="flex items-center space-x-4">
-              <div
-                className={`w-8 h-8 rounded-full bg-${transaction.category}-500 flex items-center justify-center`}
-              >
-                <span className="text-white text-xl">
-                  {transaction.type[0]} {/* First letter of transaction type */}
-                </span>
-              </div>
-              <div>
-                <div className="font-semibold">{transaction.name}</div>
-                <div className="text-sm text-gray-500">
-                  {transaction.timestamp}
+      <div className="mt-8 max-h-[500px] overflow-y-auto">
+        {transactions.map((transaction) => {
+          const bgClass = categoryColorClass[transaction.category] || "bg-gray-500";
+          
+          // Determine amount color
+          const amountColor = transaction.amount.startsWith("-") ? "text-red-500" : "text-green-500";
+
+          return (
+            <div
+              key={transaction.id}
+              className="bg-white shadow-lg rounded-lg p-4 mb-4 flex items-center justify-between hover:shadow-xl transition-shadow"
+            >
+              {/* Left: Icon + Name + Timestamp */}
+              <div className="flex items-center space-x-4">
+                <div className={`w-10 h-10 rounded-full ${bgClass} flex items-center justify-center`}>
+                  <span className="text-white font-bold">{transaction.type[0]}</span>
+                </div>
+                <div>
+                  <div className="font-semibold">{transaction.name}</div>
+                  <div className="text-sm text-gray-500">{transaction.timestamp}</div>
                 </div>
               </div>
+
+              {/* Right: Amount with Taka sign and color */}
+              <div className={`font-semibold ${amountColor}`}>
+                ৳{transaction.amount.replace("+","").replace("-","")}
+              </div>
             </div>
-            <div className={`text-${transaction.category}-500 font-semibold`}>
-              {transaction.amount}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
