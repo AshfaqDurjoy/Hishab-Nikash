@@ -10,33 +10,100 @@ import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import Startup from "./Components/Startup";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard"); 
 
   return (
     <Router>
+      
+
+    <Routes>
+  
+  <Route path="/" element={<Startup />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
+
+  <Route
+    path="/dashboard"
+    element={
       <div className="flex">
         <AppSidebar />
         <div className="ml-64 bg-gray-100 w-full">
           <Topbar currentPage={currentPage} />
-
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-           
-              <Route path="/budget" element={<Budget/>} />
-                 <Route path="/transactionPage" element={<TransactionPage/>} />
-                    <Route path="/report" element={<Report/>} />
-                     <Route path="/profile" element={<Profile/>} />
-                      <Route path="/settings" element={<Settings/>} />
-
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-
-          </Routes>
-
+          <Dashboard />
         </div>
       </div>
+    }
+  />
+
+  <Route
+    path="/budget"
+    element={
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+          <Budget />
+        </div>
+      </div>
+    }
+  />
+
+  <Route
+    path="/transactionPage"
+    element={
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+          <TransactionPage />
+        </div>
+      </div>
+    }
+  />
+
+  <Route
+    path="/report"
+    element={
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+          <Report />
+        </div>
+      </div>
+    }
+  />
+
+  <Route
+    path="/profile"
+    element={
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+          <Profile />
+        </div>
+      </div>
+    }
+  />
+
+  <Route
+    path="/settings"
+    element={
+      <div className="flex">
+        <AppSidebar />
+        <div className="ml-64 bg-gray-100 w-full">
+          <Topbar currentPage={currentPage} />
+          <Settings />
+        </div>
+      </div>
+    }
+  />
+</Routes>
+
     </Router>
   );
 };
