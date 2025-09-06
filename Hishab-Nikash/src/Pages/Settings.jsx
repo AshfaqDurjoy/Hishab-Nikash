@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; 
 import { FaDollarSign, FaBullseye, FaDownload } from "react-icons/fa";
 import CurrencySelector from "../Components/CurrencySelector.jsx";
 
@@ -29,6 +30,12 @@ const SettingsPage = () => {
             {option.component && <div className="mt-2">{option.component}</div>}
           </div>
         ))}
+         <Link
+          to="/settings/about"
+          className="text-blue-600 hover:underline mt-4 text-center"
+        >
+          Learn more about Hishab Nikash
+        </Link>
       </div>
     </div>
   );
