@@ -10,7 +10,7 @@ import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings"; 
 import Login from "./Pages/Login"; 
 import Signup from "./Pages/Signup"; 
-import Startup from "./Components/Startup";
+import Startup from "./Pages/Startup";
 
 const App = () => { 
   const [currentPage, setCurrentPage] = useState("dashboard");
