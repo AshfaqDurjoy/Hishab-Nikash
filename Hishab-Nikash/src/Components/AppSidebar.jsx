@@ -26,8 +26,8 @@ const AppSidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/report" className={linkClass}>
-            Report
+          <NavLink to="/AnalyticsScreen" className={linkClass}>
+            Analytics
           </NavLink>
         </li>
         <li>
