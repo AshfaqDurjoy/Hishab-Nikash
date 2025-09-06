@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "srart": "react-scripts start",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -12,10 +11,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
-    "lucide-react": "^0.541.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.2",
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
