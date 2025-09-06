@@ -1,4 +1,3 @@
-// AnalyticsScreen.jsx
 "use client";
 import React, { useMemo, useState } from "react";
 import { ExpenseChart } from "../Components/ExpenseChart";
@@ -28,7 +27,7 @@ const RECENT = [
   { id: 6, date: "2025-09-06", desc: "Uber", amount: -28, type: "debit", category: "Transport" },
 ];
 
-// soft, eye-friendly palettes
+//hard coded color palette
 const PALETTE_CREDIT = ["#d9f2e4", "#bfe9d5", "#92d9bf", "#67c9a9", "#3fb894"];
 const PALETTE_DEBIT  = ["#ffe2e2", "#ffc8c8", "#ffa8a8", "#ff8b8b", "#ff6b6b"];
 
@@ -40,12 +39,12 @@ const Dot = ({ color }) => (
 );
 
 export function AnalyticsScreen() {
-  const [mode, setMode] = useState("credit"); // "credit" | "debit"
+  const [mode, setMode] = useState("credit"); 
   const chartData = mode === "credit" ? CREDIT_CATEGORIES : DEBIT_CATEGORIES;
   const palette   = mode === "credit" ? PALETTE_CREDIT : PALETTE_DEBIT;
   const total     = useMemo(() => chartData.reduce((s, d) => s + d.amount, 0), [chartData]);
 
-  // color per category for list
+  // category wise color kora
   const colorMap = useMemo(() => {
     const m = new Map();
     chartData.forEach((c, i) => m.set(c.name, palette[i % palette.length]));
@@ -56,9 +55,9 @@ export function AnalyticsScreen() {
 
   return (
     <div className="space-y-6">
-      {/* Page Title */}
+      {/* Page Title 
       <h1 className="text-3xl font-extrabold tracking-tight">Transaction Analytics</h1>
-
+      */}
       {/* Main Card */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
         {/* Pill Toggle */}
@@ -138,8 +137,7 @@ export function AnalyticsScreen() {
             <p className="text-xs text-gray-500 mt-1">Pie & list update with the toggle</p>
           </div>
         </div>
-
-        {/* Recent Transactions */}
+        {/* Recent Transactions x
         <div className="mt-8">
           <h3 className="text-sm font-semibold text-gray-700 mb-3">Recent Transactions</h3>
           <div className="max-h-72 overflow-auto pr-1">
@@ -165,6 +163,7 @@ export function AnalyticsScreen() {
             </ul>
           </div>
         </div>
+        */}
       </div>
     </div>
   );
