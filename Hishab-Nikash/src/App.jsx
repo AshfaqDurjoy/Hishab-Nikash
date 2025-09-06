@@ -16,9 +16,12 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   return(
     <Router>
+      <div className="flex"> <AppSidebar /> <div className="ml-64 bg-gray-100 w-full"> <Topbar currentPage={currentPage} />
 <Routes>
-  
+
+
   <Route path="/" element={<Startup />} />
+
 
   
   <Route path="/dashboard" element={<Dashboard />} />
@@ -31,6 +34,9 @@ const App = () => {
   <Route path="/signup" element={<Signup />} />
   <Route path="/login" element={<Login />} />
 </Routes>
+</div>
+
+</div>
 
       </Router>
   );
