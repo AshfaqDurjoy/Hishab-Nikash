@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddTransaction = () => {
+const AddTransaction = ({ onAdd, userId = 1 }) => {
   const [formData, setFormData] = useState({
     title: "",
     amount: "",
@@ -14,24 +14,62 @@ const AddTransaction = () => {
   const categoryOptions = [
     "Grocery","Milk","Internet","Gas Filling","Electricity","Water",
     "Rent","Phone Bill","Dining Out","Entertainment","Healthcare",
-    "Transportation","Clothing","Insurance","Education","Others"
+    "Transportation","Clothing","Insurance","Education",
+    "Salary", "Bonus", "Part Time","Others"
   ];
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Transaction Added:", formData);
 
-    setFormData({
-      title: "",
-      amount: "",
-      type: "",
-      category: "",
-    });
-    alert("Transaction saved successfully!");
+    try {
+      const res = await fetch("http://localhost:5000/add-transaction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          title: formData.title,
+          amount: Number(formData.amount),
+          type: formData.type,
+          category: formData.category,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("Backend response:", data);
+
+      if (res.ok) {
+        // alert
+        alert("Transaction Added Successfully!");
+
+        if (typeof onAdd === "function") {
+          const newTx = {
+            id: data.transactionId,
+            title: formData.title,
+            amount: Number(formData.amount),
+            type: formData.type,
+            category: formData.category,
+            timestamp: new Date().toLocaleString(),
+          };
+          onAdd(newTx);
+        }
+
+        //Reset
+        setFormData({ title: "", amount: "", type: "", category: "" });
+
+      } else {
+        //error
+        console.error("Error saving transaction:", data);
+        alert("Error saving transaction! Check console.");
+      }
+
+    } catch (err) {
+      console.error("Error submitting transaction:", err);
+      alert("Something went wrong! Check console.");
+    }
   };
 
   return (
@@ -39,7 +77,7 @@ const AddTransaction = () => {
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Transaction</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
+        {}
         <div>
           <label className="block text-sm font-medium text-gray-700">Title</label>
           <input
@@ -52,7 +90,7 @@ const AddTransaction = () => {
           />
         </div>
 
-        {/* Amount */}
+        {}
         <div>
           <label className="block text-sm font-medium text-gray-700">Amount</label>
           <input
@@ -65,7 +103,7 @@ const AddTransaction = () => {
           />
         </div>
 
-        {/* Type */}
+        {}
         <div className="relative">
           <label className="block text-sm font-medium text-gray-700">Type</label>
           <div
@@ -73,67 +111,43 @@ const AddTransaction = () => {
             onClick={() => setTypeOpen(!typeOpen)}
           >
             <span>{formData.type || "-- Select Type"}</span>
-            <svg
-              className={`h-4 w-4 transform transition-transform ${typeOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className={`h-4 w-4 transform transition-transform ${typeOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
           {typeOpen && (
             <ul className="absolute z-10 w-full bg-white border border-gray-400 mt-1 max-h-40 overflow-y-auto rounded-md shadow-md">
-              {["Debit","Credit"].map((option) => (
-                <li
-                  key={option}
-                  onClick={() => {handleChange("type", option); setTypeOpen(false);}}
-                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
-                >
-                  {option}
-                </li>
+              {["Debit", "Credit"].map((option) => (
+                <li key={option} onClick={() => { handleChange("type", option); setTypeOpen(false); }}
+                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer">{option}</li>
               ))}
             </ul>
           )}
         </div>
 
-        {/* Category */}
+        {}
         <div className="relative">
           <label className="block text-sm font-medium text-gray-700">Category</label>
-          <div
-            className="w-full border border-gray-400 rounded-md px-3 py-2 flex justify-between items-center cursor-pointer"
-            onClick={() => setCategoryOpen(!categoryOpen)}
-          >
+          <div className="w-full border border-gray-400 rounded-md px-3 py-2 flex justify-between items-center cursor-pointer"
+               onClick={() => setCategoryOpen(!categoryOpen)}>
             <span>{formData.category || "-- Select Category"}</span>
-            <svg
-              className={`h-4 w-4 transform transition-transform ${categoryOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className={`h-4 w-4 transform transition-transform ${categoryOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
           {categoryOpen && (
             <ul className="absolute z-10 w-full bg-white border border-gray-400 mt-1 max-h-40 overflow-y-auto rounded-md shadow-md">
               {categoryOptions.map((option) => (
-                <li
-                  key={option}
-                  onClick={() => {handleChange("category", option); setCategoryOpen(false);}}
-                  className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
-                >
-                  {option}
-                </li>
+                <li key={option} onClick={() => { handleChange("category", option); setCategoryOpen(false); }}
+                    className="px-3 py-2 hover:bg-blue-100 cursor-pointer">{option}</li>
               ))}
             </ul>
           )}
         </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm w-full cursor-pointer hover:bg-blue-700"
-        >
+        {}
+        <button type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm w-full cursor-pointer hover:bg-blue-700">
           Save Transaction
         </button>
       </form>
