@@ -16,7 +16,9 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   return(
     <Router>
-      <div className="flex"> <AppSidebar /> <div className="ml-64 bg-gray-100 w-full"> <Topbar currentPage={currentPage} />
+      <div className="flex"> 
+        <AppSidebar /> <div className="ml-64 bg-gray-100 w-full"> 
+          <Topbar currentPage={currentPage} />
 <Routes>
 
 
