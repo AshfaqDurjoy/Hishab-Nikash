@@ -2,6 +2,7 @@ import React from "react";
 import { FaFilter, FaCalendarAlt } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown, HiCurrencyBangladeshi, HiCalendar } from "react-icons/hi";
 
+{/* 
 const transactions = [
   {
     id: 1,
@@ -52,6 +53,8 @@ const stats = [
   },
 ];
 
+*/}
+
 const categoryColors = {
   green: "bg-green-500",
   purple: "bg-purple-500",
@@ -60,80 +63,50 @@ const categoryColors = {
 };
 
 const Dashboard = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [stats, setStats] = useState({
+    totalBalance: 0,
+    totalCredit: 0,
+    totalDebit: 0,
+    monthBalance: 0,
+  });
+
+  useEffect(() => {
+    // Fetch transactions when the component is mounted
+    axios.get("http://localhost/transactions.php").then((response) => {
+      setTransactions(response.data);
+      calculateStats(response.data);
+    });
+  }, []);
+
+  const calculateStats = (transactions) => {
+    const totalCredit = transactions
+      .filter((transaction) => transaction.type === "credit")
+      .reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
+    const totalDebit = transactions
+      .filter((transaction) => transaction.type === "debit")
+      .reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
+    const totalBalance = totalCredit - totalDebit;
+
+    setStats({
+      totalBalance,
+      totalCredit,
+      totalDebit,
+      monthBalance: totalBalance, // Update this based on your criteria for monthly balance
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto p-8">
-      {/* Filters */}
-      <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center space-x-4">
-          <button className="flex items-center border border-black px-4 py-2 rounded-md text-sm">
-            <FaFilter className="mr-2" /> Filter
-          </button>
-          <select className="border border-black px-4 py-2 rounded-md text-sm">
-            <option value="all">All Categories</option>
-            <option value="salary">Salary</option>
-            <option value="shopping">Shopping</option>
-          </select>
-          <button className="flex items-center border border-black px-4 py-2 rounded-md text-sm">
-            <FaCalendarAlt className="mr-2" /> Calendar
-          </button>
-        </div>
-        <div className="text-sm font-semibold text-gray-800">
-          Total Transactions Found: {transactions.length}
-        </div>
-        <button className="bg-white text-black border border-black px-4 py-2 rounded-md text-sm">
-          Export
-        </button>
-      </div>
-
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((stat, idx) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={idx}
-              className={`flex items-center p-4 rounded-lg shadow-sm ${stat.bgColor}`}
-            >
-              <div className={`p-3 rounded-full ${stat.color} bg-white/30 mr-4`}>
-                <Icon className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">{stat.title}</p>
-                <p className="font-semibold text-lg">{stat.value}</p>
-              </div>
-            </div>
-          );
-        })}
+        {/* Display stats like Total Balance, Total Credit, Total Debit */}
       </div>
 
       {/* Transactions List */}
       <div className="space-y-4">
         {transactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="bg-white shadow-lg rounded-lg p-4 flex items-center justify-between"
-          >
-            <div className="flex items-center space-x-4">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center ${categoryColors[transaction.category]}`}
-              >
-                <span className="text-white font-bold text-lg">
-                  {transaction.type[0].toUpperCase()}
-                </span>
-              </div>
-              <div>
-                <div className="font-semibold">{transaction.name}</div>
-                <div className="text-sm text-gray-500">{transaction.timestamp}</div>
-              </div>
-            </div>
-            <div
-              className={`font-semibold ${
-                transaction.amount > 0 ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {transaction.amount > 0 ? "+" : "-"}৳{Math.abs(transaction.amount).toLocaleString()}
-            </div>
-          </div>
+          <TransactionCard key={transaction.id} transaction={transaction} />
         ))}
       </div>
     </div>
