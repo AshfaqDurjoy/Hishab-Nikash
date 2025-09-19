@@ -41,7 +41,7 @@ const App = () => {
             {}
             <Route
               path="/"
-              element={token ? <Navigate to="/dashboard" /> : <Startup />}
+              element={token ? <Navigate to="/startup" /> : <Startup />}
             />
 
             {}
