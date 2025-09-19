@@ -1,95 +1,125 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ExpenseChart } from "../Components/ExpenseChart";
 
+// ==== CONFIG: choose backend URL ====
+// 1) Use your Node/Express route from Server.js:
+const ANALYTICS_URL = "http://localhost:5000/analytics"; // Make sure the backend server is running on port 5000
+// 2) If you're using a PHP route instead, you can use the following line (comment out the above):
+// const ANALYTICS_URL = "http://localhost/hishab-api/analytics.php"; 
 
-const CREDIT_CATEGORIES = [
-  { name: "Salary", amount: 5200 },
-  { name: "Refunds", amount: 350 },
-  { name: "Dividends", amount: 240 },
-  { name: "Other Income", amount: 160 },
-];
-
-const DEBIT_CATEGORIES = [
-  { name: "Groceries", amount: 820 },
-  { name: "Bills & Utilities", amount: 610 },
-  { name: "Shopping", amount: 440 },
-  { name: "Dining", amount: 260 },
-  { name: "Transport", amount: 180 },
-];
-
-const RECENT = [
-  { id: 1, date: "2025-09-02", desc: "Salary (ACME Inc.)", amount: 5200, type: "credit", category: "Salary" },
-  { id: 2, date: "2025-09-03", desc: "Groceries — Shwapno", amount: -145, type: "debit", category: "Groceries" },
-  { id: 3, date: "2025-09-03", desc: "Electric Bill", amount: -320, type: "debit", category: "Bills & Utilities" },
-  { id: 4, date: "2025-09-04", desc: "Refund — Online Store", amount: 90, type: "credit", category: "Refunds" },
-  { id: 5, date: "2025-09-05", desc: "Dinner — Kacchi Bhai", amount: -75, type: "debit", category: "Dining" },
-  { id: 6, date: "2025-09-06", desc: "Uber", amount: -28, type: "debit", category: "Transport" },
-];
-
-//hard coded color palette
+// ==== Palettes (yours) ====
 const PALETTE_CREDIT = ["#d9f2e4", "#bfe9d5", "#92d9bf", "#67c9a9", "#3fb894"];
 const PALETTE_DEBIT  = ["#ffe2e2", "#ffc8c8", "#ffa8a8", "#ff8b8b", "#ff6b6b"];
 
-// tiny colored dot for legend/list
+// tiny colored dot for the legend
 const Dot = ({ color }) => (
-  <span className="inline-block align-middle" style={{
-    width: 10, height: 10, borderRadius: 9999, background: color
-  }} />
+  <span className="inline-block align-middle" style={{ width: 10, height: 10, borderRadius: 9999, background: color }} />
 );
 
-export function AnalyticsScreen() {
-  const [mode, setMode] = useState("credit"); 
-  const chartData = mode === "credit" ? CREDIT_CATEGORIES : DEBIT_CATEGORIES;
-  const palette   = mode === "credit" ? PALETTE_CREDIT : PALETTE_DEBIT;
-  const total     = useMemo(() => chartData.reduce((s, d) => s + d.amount, 0), [chartData]);
+export default function Report() {
+  const [mode, setMode] = useState("credit"); // "credit" | "debit"
+  const [range, setRange] = useState("7d");   // "today" | "3d" | "7d" | "1m"
+  const [creditData, setCreditData] = useState([]); // Data for Credit Transactions [{name, amount}]
+  const [debitData, setDebitData]   = useState([]); // Data for Debit Transactions [{name, amount}]
+  const [loading, setLoading]       = useState(false); // For loading state
+  const [error, setError]           = useState(""); // For error state
 
-  // category wise color kora
-  const colorMap = useMemo(() => {
-    const m = new Map();
-    chartData.forEach((c, i) => m.set(c.name, palette[i % palette.length]));
-    return m;
-  }, [chartData, palette]);
+  // If you have user authentication, you can pass user_id
+  const userId = null; // Example: from context/store or login session
 
-  const filteredRecent = RECENT.filter(r => r.type === mode);
+  // Fetch analytics data whenever range changes
+  useEffect(() => {
+    const url = new URL(ANALYTICS_URL);
+    url.searchParams.set("range", range); // Set range filter (7d, today, 3d, 1m)
+    if (userId) url.searchParams.set("user_id", userId); // Optionally add user_id if available
+
+    setLoading(true);
+    setError(""); // Reset errors on new fetch
+
+    fetch(url.toString()) // Fetch from backend
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`); // Handle failed request
+        return r.json(); // Parse JSON data
+      })
+      .then((data) => {
+        // Normalize shapes: Expect arrays [{name, amount}]
+        const cd = Array.isArray(data.credit) ? data.credit : (data.credit?.rows || []);
+        const dd = Array.isArray(data.debit)  ? data.debit  : (data.debit?.rows  || []);
+        setCreditData(cd.map(x => ({ name: x.name, amount: Number(x.amount) || 0 })));
+        setDebitData (dd.map(x => ({ name: x.name, amount: Number(x.amount) || 0 })));
+      })
+      .catch((e) => setError(e.message || "Failed to load analytics")) // Handle errors
+      .finally(() => setLoading(false)); // End loading state
+  }, [range, userId]); // Dependency array: refetch when `range` or `userId` changes
+
+  const chartData = mode === "credit" ? creditData : debitData; // Select data based on mode
+  const palette   = mode === "credit" ? PALETTE_CREDIT : PALETTE_DEBIT; // Set colors for chart
+
+  const total = useMemo(
+    () => chartData.reduce((s, d) => s + (Number(d.amount) || 0), 0), // Sum up total amount
+    [chartData]
+  );
 
   return (
     <div className="space-y-6">
-      {/* Page Title 
-      <h1 className="text-3xl font-extrabold tracking-tight">Transaction Analytics</h1>
-      */}
-      {/* Main Card */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6">
-        {/* Pill Toggle */}
-        <div className="flex justify-center">
-          <div className="inline-flex rounded-full p-1 bg-gray-100 border border-gray-200">
-            <button
-              onClick={() => setMode("credit")}
-              className={`px-4 py-2 text-sm md:text-base rounded-full transition
-                ${mode === "credit" ? "bg-blue-600 text-white shadow" : "text-gray-600 hover:text-gray-800"}`}
-              aria-pressed={mode === "credit"}
-            >
-              Credit
-            </button>
-            <button
-              onClick={() => setMode("debit")}
-              className={`px-4 py-2 text-sm md:text-base rounded-full transition
-                ${mode === "debit" ? "bg-blue-600 text-white shadow" : "text-gray-600 hover:text-gray-800"}`}
-              aria-pressed={mode === "debit"}
-            >
-              Debit
-            </button>
+        {/* Top bar: Credit/Debit toggle + Range filter */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div className="flex justify-center">
+            <div className="inline-flex rounded-full p-1 bg-gray-100 border border-gray-200">
+              <button
+                onClick={() => setMode("credit")}
+                className={`px-4 py-2 text-sm md:text-base rounded-full transition
+                  ${mode === "credit" ? "bg-blue-600 text-white shadow" : "text-gray-600 hover:text-gray-800"}`}
+                aria-pressed={mode === "credit"}
+              >
+                Credit
+              </button>
+              <button
+                onClick={() => setMode("debit")}
+                className={`px-4 py-2 text-sm md:text-base rounded-full transition
+                  ${mode === "debit" ? "bg-blue-600 text-white shadow" : "text-gray-600 hover:text-gray-800"}`}
+                aria-pressed={mode === "debit"}
+              >
+                Debit
+              </button>
+            </div>
+          </div>
+
+          {/* Range filter */}
+          <div className="flex justify-center">
+            <div className="inline-flex rounded-full p-1 bg-gray-100 border border-gray-200">
+              {["today", "3d", "7d", "1m"].map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRange(r)}
+                  className={`px-3 py-1.5 text-xs md:text-sm rounded-full transition
+                    ${range === r ? "bg-gray-900 text-white shadow" : "text-gray-700 hover:text-gray-900"}`}
+                  aria-pressed={range === r}
+                  title={
+                    r === "today" ? "Today" :
+                    r === "3d"    ? "Past 3 days" :
+                    r === "7d"    ? "Past 7 days" : "Past 1 month"
+                  }
+                >
+                  {r === "today" ? "Today" : r === "3d" ? "3d" : r === "7d" ? "7d" : "1m"}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
+        {/* Loading / Error */}
+        {loading && <p className="mt-4 text-sm text-gray-500">Loading analytics…</p>}
+        {error &&   <p className="mt-4 text-sm text-rose-600">Error: {error}</p>}
+
         {/* Chart + Legend */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-6 items-start">
-          {/* Pie Chart (SVG, no libs) */}
           <div className="lg:col-span-3">
-            <ExpenseChart data={chartData} palette={palette} />
+            <ExpenseChart data={chartData} palette={palette} /> {/* Chart for displaying data */}
           </div>
 
-          {/* Legend */}
           <div className="lg:col-span-2">
             <div className="rounded-xl border border-gray-100 p-4">
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Breakdown</h3>
@@ -104,12 +134,15 @@ export function AnalyticsScreen() {
                         <span className="text-sm text-gray-800 truncate">{d.name}</span>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm font-semibold text-gray-900">৳{d.amount.toLocaleString()}</div>
+                        <div className="text-sm font-semibold text-gray-900">৳{Number(d.amount).toLocaleString()}</div>
                         <div className="text-xs text-gray-500">{pct}%</div>
                       </div>
                     </li>
                   );
                 })}
+                {!loading && chartData.length === 0 && (
+                  <li className="text-sm text-gray-500">No data in this range.</li>
+                )}
               </ul>
             </div>
           </div>
@@ -134,36 +167,9 @@ export function AnalyticsScreen() {
           <div className="rounded-xl border border-gray-100 p-5">
             <p className="text-xs uppercase tracking-wide text-gray-500">View</p>
             <p className="text-lg font-semibold">{mode === "credit" ? "Credit" : "Debit"}</p>
-            <p className="text-xs text-gray-500 mt-1">Pie & list update with the toggle</p>
+            <p className="text-xs text-gray-500 mt-1">Filter: {range === "today" ? "Today" : range === "3d" ? "Past 3 days" : range === "7d" ? "Past 7 days" : "Past 1 month"}</p>
           </div>
         </div>
-        {/* Recent Transactions x
-        <div className="mt-8">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">Recent Transactions</h3>
-          <div className="max-h-72 overflow-auto pr-1">
-            <ul className="divide-y divide-gray-100">
-              {filteredRecent.map((tx) => {
-                const isCredit = tx.type === "credit";
-                const color = colorMap.get(tx.category) || (isCredit ? "#3fb894" : "#ff6b6b");
-                return (
-                  <li key={tx.id} className="py-3 flex items-center justify-between">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <Dot color={color} />
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-gray-800 truncate">{tx.desc}</p>
-                        <p className="text-xs text-gray-500">{tx.date} • {tx.category}</p>
-                      </div>
-                    </div>
-                    <div className={`text-sm font-semibold ${isCredit ? "text-emerald-600" : "text-rose-600"}`}>
-                      {isCredit ? "+" : "-"}৳{Math.abs(tx.amount).toLocaleString()}
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-        */}
       </div>
     </div>
   );
