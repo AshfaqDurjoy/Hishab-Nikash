@@ -8,6 +8,7 @@ import TransactionPage from "./Pages/TransactionPage";
 import AnalyticsScreen from "./Pages/AnalyticsScreen";
 import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings";
+import About from "./Pages/About"; 
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 
@@ -33,6 +34,7 @@ const App = () => {
                  <Route path="/transactionPage" element={<TransactionPage/>} />
                     <Route path="/AnalyticsScreen" element={<AnalyticsScreen/>} />
                      <Route path="/profile" element={<Profile/>} />
+                    <Route path="/settings/about" element={<About />} />
                       <Route path="/settings" element={<Settings/>} />
 
 =======
