@@ -61,6 +61,8 @@ const categoryColors = {
 
 const Dashboard = () => {
   return (
+    
+
     <div className="max-w-5xl mx-auto p-8">
       {/* Filters */}
       <div className="flex justify-between items-center mb-8">

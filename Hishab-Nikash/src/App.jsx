@@ -11,21 +11,28 @@ import Settings from "./Pages/Settings";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 
+
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard"); 
+  const [showAddTransactionModal, setShowAddTransactionModal] = useState(false);
 
   return (
     <Router>
       <div className="flex">
         <AppSidebar />
         <div className="ml-64 bg-gray-100 w-full">
-          <Topbar currentPage={currentPage} />
+          <Topbar currentPage={currentPage} 
+          openModal={() => setShowAddTransactionModal(true)} 
+          />
 
           <Routes>
             <Route path="/" element={<Dashboard />} />
            
               <Route path="/budget" element={<Budget/>} />
-                 <Route path="/transactionPage" element={<TransactionPage/>} />
+                 <Route path="/transactionPage" element={<TransactionPage
+                 showForm={showAddTransactionModal} 
+                 setShowForm={setShowAddTransactionModal} 
+                 />} />
                     <Route path="/report" element={<Report/>} />
                      <Route path="/profile" element={<Profile/>} />
                       <Route path="/settings" element={<Settings/>} />

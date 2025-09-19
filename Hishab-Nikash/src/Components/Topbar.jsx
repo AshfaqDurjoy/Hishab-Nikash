@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { FaBell } from 'react-icons/fa'; 
  
 
-const Topbar = () => {
+const Topbar = ({ currentPage, openModal }) => {
 
-  const [currentPage, setCurrentPage] = useState('Transactions');
+  //const [currentPage, setCurrentPage] = useState('Transactions');
 
   const getPageTitle = () => {
     switch (currentPage) {
@@ -33,7 +33,9 @@ const Topbar = () => {
         <button className="bg-white border border-black p-2 rounded-full">
           <FaBell className="text-black" />
         </button>
-        <button className="bg-black text-white px-4 py-2 rounded-md text-sm">
+        <button 
+        onClick={openModal} 
+        className="bg-black text-white px-4 py-2 rounded-md text-sm">
           + Add Transaction
         </button>
       </div>

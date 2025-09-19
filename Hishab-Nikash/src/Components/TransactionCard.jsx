@@ -1,56 +1,43 @@
 import React from "react";
-/*
-// Transaction data moved here for rendering
-const transactions = [
-  {
-    id: 1,
-    name: "Salary Deposit",
-    amount: "+5000",
-    timestamp: "Today, 9:00 AM",
-    type: "Salary",
-    category: "green",
-  },
-  {
-    id: 2,
-    name: "Grocery Shopping",
-    amount: "-250",
-    timestamp: "Yesterday, 6:30 PM",
-    type: "Shopping",
-    category: "purple",
-  },
-  // Add more transactions as needed...
-];*/
 
-const TransactionCard = () => {
+const TransactionCard = ({ name, type, amount, timestamp }) => {
+  // Format amount with commas and currency symbol
+  const formattedAmount = `${type === "Income" ? "৳" : "-৳"}${Math.abs(amount).toLocaleString()}`;
+
+  // Format date nicely
+  const formattedDate = new Date(timestamp).toLocaleString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
-    <div className="max-w-5xl mx-auto p-8">
-      {/* Transactions Section */}
-      <div className="mt-8">
-        {transactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="bg-white shadow-lg rounded-lg p-4 mb-4 flex items-center justify-between"
-          >
-            <div className="flex items-center space-x-4">
-              <div
-                className={`w-8 h-8 rounded-full bg-${transaction.category}-500 flex items-center justify-center`}
-              >
-                <span className="text-white text-xl">
-                  {transaction.type[0]} {/* First letter of transaction type */}
-                </span>
-              </div>
-              <div>
-                <div className="font-semibold">{transaction.name}</div>
-                <div className="text-sm text-gray-500">
-                  {transaction.timestamp}
-                </div>
-              </div>
-            </div>
-            <div className={`text-${transaction.category}-500 font-semibold`}>
-              {transaction.amount}
-            </div>
-          </div>
-        ))}
+    <div className="bg-white shadow-lg rounded-lg p-4 flex items-center justify-between mb-4">
+      <div className="flex items-center space-x-4">
+        {/* Type badge */}
+        <div
+          className={`w-10 h-10 rounded-full flex items-center justify-center ${
+            type === "Income" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          <span className="text-white font-bold text-lg">
+            {type[0]}
+          </span>
+        </div>
+
+        {/* Transaction info */}
+        <div>
+          <div className="font-semibold text-gray-800">{name}</div>
+          <div className="text-sm text-gray-500">{formattedDate}</div>
+        </div>
+      </div>
+
+      {/* Amount */}
+      <div className={`${type === "Income" ? "text-green-600" : "text-red-600"} font-bold text-lg`}>
+        {formattedAmount}
       </div>
     </div>
   );
