@@ -27,16 +27,26 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
+    <Router basename="/Hishab-Nikash">
+
       <div className="flex">
-        {}
-        <AppSidebar setCurrentPage={setCurrentPage} disabled={!token} setToken={setToken} />
+        {token && (
+           <AppSidebar 
+           setCurrentPage={setCurrentPage} 
+           disabled={!token} 
+           setToken={setToken} />
+        )}
+       
 
-        <div className="ml-64 bg-gray-100 w-full">
+        <div className={`${token ? "ml-64" : ""} bg-gray-100 w-full`}>
 
-          {}
-          <Topbar currentPage={currentPage} disabled={!token} />
 
+          {token && 
+           <Topbar currentPage={currentPage} 
+           disabled={!token} />
+
+          }
+         
           <Routes>
             {}
             <Route
