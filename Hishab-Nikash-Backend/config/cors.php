@@ -17,7 +17,7 @@ return [
 
 'paths' => ['api/*', 'sanctum/csrf-cookie'],
 'allowed_methods' => ['*'],
-'allowed_origins' => [env('FRONTEND_URL', '*')],
+'allowed_origins' => [env('https://hishab-nikash-phi.vercel.app/', '*')],
 'allowed_origins_patterns' => [],
 'allowed_headers' => ['*'],
 'exposed_headers' => [],
