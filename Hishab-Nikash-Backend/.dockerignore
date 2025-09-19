@@ -4,6 +4,8 @@ node_modules
 README.md
 .env
 .env.backup
+.env.local
+.env.example
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -12,3 +14,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/tests
+/storage/logs/*.log
+/public/hot
+/public/storage
+vendor/bin

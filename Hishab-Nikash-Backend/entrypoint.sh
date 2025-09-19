@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Wait for database to be ready (optional but recommended)
+# Wait for database to be ready
 echo "Waiting for database connection..."
-sleep 10
+sleep 15
 
-# Clear and cache Laravel configurations
+# Clear Laravel caches
 echo "Clearing Laravel caches..."
 php artisan config:clear
 php artisan cache:clear
@@ -21,12 +21,19 @@ fi
 echo "Running database migrations..."
 php artisan migrate --force
 
+# Seed database if needed (optional)
+# php artisan db:seed --force
+
 # Cache configurations for better performance
 echo "Caching configurations..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Set proper permissions again (just in case)
+chown -R www-data:www-data /var/www/html/storage
+chown -R www-data:www-data /var/www/html/bootstrap/cache
+
 # Start Apache in foreground
 echo "Starting Apache server..."
-apache2-foreground
+exec apache2-foreground
