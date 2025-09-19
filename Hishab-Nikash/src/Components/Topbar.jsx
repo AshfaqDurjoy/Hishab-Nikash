@@ -3,7 +3,7 @@ import React from 'react';
 import { FaBell } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 const Topbar = ({ currentPage, disabled }) => {
-  const [currentPage, setCurrentPage] = useState('Transactions');
+  //const [currentPage, setCurrentPage] = useState('Transactions');
   const navigate = useNavigate();
 
 
