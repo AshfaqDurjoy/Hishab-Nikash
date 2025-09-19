@@ -10,6 +10,7 @@ import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import Startup from "./Pages/Startup";
 import AddTransaction from "./Pages/AddTransaction";
 
 const App = () => {
@@ -20,10 +21,11 @@ const App = () => {
       <div className="flex">
         <AppSidebar />
         <div className="ml-64 bg-gray-100 w-full">
-          <Topbar />
+           <Topbar currentPage={currentPage} />
 
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Startup />} />
+            //<Route path="/" element={<Dashboard />} />
             <Route path="/budget" element={<Budget/>} />
             <Route path="/add-transaction" element={<AddTransaction/>} />
             <Route path="/report" element={<Report/>} />
@@ -33,12 +35,15 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/transactionPage" element={<TransactionPage />} />
 
-          </Routes>
 
-        </div>
-      </div>
-    </Router>
+  <Route path="/signup" element={<Signup />} />
+  <Route path="/login" element={<Login />} />
+</Routes>
+</div>
+
+</div>
+
+      </Router>
   );
 };
-
 export default App;
