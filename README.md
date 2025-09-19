@@ -24,7 +24,7 @@
    
    WakaTime: 
 
-   [![wakatime](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3.svg)](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3)
+  [![wakatime](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3.svg)](https://wakatime.com/badge/user/3c3a70e6-1115-4008-9fe1-9707b29ec6e9/project/26b504e9-3a92-4010-b3e3-1196f88e4ce3)
 
 3. **Zarin Tasnim Fema**  
    Role: Frontend & Backend Developer  
