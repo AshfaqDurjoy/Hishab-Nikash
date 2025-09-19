@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { FaBell } from 'react-icons/fa'; 
- 
+import { useNavigate } from 'react-router-dom'; 
 
 const Topbar = () => {
 
   const [currentPage, setCurrentPage] = useState('Transactions');
+  const navigate = useNavigate();
 
   const getPageTitle = () => {
     switch (currentPage) {
@@ -33,7 +34,10 @@ const Topbar = () => {
         <button className="bg-white border border-black p-2 rounded-full">
           <FaBell className="text-black" />
         </button>
-        <button className="bg-black text-white px-4 py-2 rounded-md text-sm">
+        <button 
+        onClick={ () => navigate ( "/add-transaction")} 
+        className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer hover:bg-blue-700"
+        >
           + Add Transaction
         </button>
       </div>
