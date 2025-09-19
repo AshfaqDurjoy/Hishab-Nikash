@@ -1,7 +1,11 @@
+
 import React from 'react';
 import { FaBell } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
 const Topbar = ({ currentPage, disabled }) => {
+  const [currentPage, setCurrentPage] = useState('Transactions');
+  const navigate = useNavigate();
+
 
   const getPageTitle = () => {
     if (disabled) return "Welcome";
@@ -49,7 +53,9 @@ const Topbar = ({ currentPage, disabled }) => {
         >
           <FaBell className="text-black" />
         </button>
-        <button
+
+        <button 
+         onClick={ () => navigate ( "/add-transaction")} 
           className={`px-4 py-2 rounded-md text-sm ${
             disabled ? "bg-gray-300 text-gray-600 cursor-not-allowed opacity-50" : "bg-black text-white"
           }`}

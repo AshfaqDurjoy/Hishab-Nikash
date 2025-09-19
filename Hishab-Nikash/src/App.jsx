@@ -11,6 +11,9 @@ import Settings from "./Pages/Settings";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Startup from "./Pages/Startup";
+import AddTransaction from "./Pages/AddTransaction";
+
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -30,6 +33,7 @@ const App = () => {
         <AppSidebar setCurrentPage={setCurrentPage} disabled={!token} setToken={setToken} />
 
         <div className="ml-64 bg-gray-100 w-full">
+
           {}
           <Topbar currentPage={currentPage} disabled={!token} />
 
@@ -37,7 +41,7 @@ const App = () => {
             {}
             <Route
               path="/"
-              element={token ? <Navigate to="/dashboard" /> : <Navigate to="/signup" />}
+              element={token ? <Navigate to="/dashboard" /> : <Startup />}
             />
 
             {}
@@ -97,7 +101,7 @@ const App = () => {
         </div>
       </div>
     </Router>
+
   );
 };
-
 export default App;
