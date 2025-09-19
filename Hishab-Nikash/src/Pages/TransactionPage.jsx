@@ -5,7 +5,7 @@ const TransactionPage = () => {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/transactions")
+    fetch("http://127.0.0.1:8000/api/transactions")
       .then((res) => res.json())
       .then((data) => setTransactions(data))
       .catch((err) => console.error("Error Fetching Transactions:", err));
