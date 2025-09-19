@@ -1,7 +1,9 @@
 import React from "react";
 import { FaFilter, FaCalendarAlt } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown, HiCurrencyBangladeshi, HiCalendar } from "react-icons/hi";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import TransactionCard from "./TransactionCard";
 {/* 
 const transactions = [
   {

@@ -1,12 +1,9 @@
-// Get the current location (path)
-  
-  // Dynamically set page title based on current route
-//dynamic routing kora topbar e page wise name change hobe
-import React, { useState } from 'react';
-import { FaBell } from 'react-icons/fa'; 
-import { useNavigate } from 'react-router-dom'; 
+import React from 'react';
+import { FaBell } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom'; 
 
 const Topbar = () => {
+  const location = useLocation(); 
 
   const [currentPage, setCurrentPage] = useState('Transactions');
   const navigate = useNavigate();
@@ -36,7 +33,7 @@ const Topbar = () => {
   return (
     <div className="bg-white shadow-md p-4 flex justify-between items-center">
       <div className="text-sm font-semibold text-gray-800">
-        <h1>{getPageTitle()}</h1> {/* Display dynamic page title */}
+        <h1>{getPageTitle()}</h1> 
       </div>
 
       <div className="flex items-center space-x-4">
