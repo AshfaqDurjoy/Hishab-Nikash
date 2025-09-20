@@ -2,7 +2,7 @@ import React from 'react';
 import { FaBell, FaBars } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const Topbar = ({ currentPage, disabled, setSidebarOpen }) => {
+const Topbar = ({ currentPage, disabled, setSidebarOpen, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
 
   const getPageTitle = () => {
@@ -33,14 +33,8 @@ const Topbar = ({ currentPage, disabled, setSidebarOpen }) => {
 
       {}
       <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-        <input
-          type="text"
-          placeholder={disabled ? "Login required" : "Search..."}
-          className={`px-4 py-2 border border-black rounded-md text-sm text-gray-700 w-full sm:w-64 ${
-            disabled ? "bg-gray-100 cursor-not-allowed opacity-50" : "bg-gray-200"
-          }`}
-          disabled={disabled}
-        />
+       
+
         <div className="flex items-center gap-3">
           <button className={`bg-white border border-black p-2 rounded-full ${disabled ? "cursor-not-allowed opacity-50" : ""}`} disabled={disabled}>
             <FaBell className="text-black" />
