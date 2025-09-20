@@ -47,11 +47,16 @@ const Topbar = ({ currentPage, disabled, setSidebarOpen }) => {
           </button>
           <button
             onClick={() => navigate("/add-transaction")}
-            className={`px-4 py-2 rounded-md text-sm ${disabled ? "bg-gray-300 text-gray-600 cursor-not-allowed opacity-50" : "bg-black text-white"}`}
+            className={`px-4 py-2 rounded-md text-sm ${
+            disabled
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed opacity-50"
+              : "bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
+            }`}
             disabled={disabled}
           >
             + Add Transaction
           </button>
+
         </div>
       </div>
     </div>
