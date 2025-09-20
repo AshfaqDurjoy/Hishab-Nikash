@@ -13,7 +13,7 @@ import Signup from "./Pages/Signup";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Startup from "./Pages/Startup";
 import AddTransaction from "./Pages/AddTransaction";
-
+import Chat from './Pages/Chat';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -104,6 +104,14 @@ const App = () => {
               element={
                 <ProtectedRoute token={token}>
                   <Settings />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/chat"
+              element={
+                <ProtectedRoute token={token}>
+                  <Chat />
                 </ProtectedRoute>
               }
             />
