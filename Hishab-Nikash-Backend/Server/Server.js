@@ -1,4 +1,4 @@
-import express from "express";
+/*import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 
@@ -85,3 +85,4 @@ app.get("/transactions", (req, res) => {
 app.listen(port, () => {
   console.log(`Server Running on http://localhost:${port}`);
 });
+*/
