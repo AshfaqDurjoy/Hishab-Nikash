@@ -61,12 +61,11 @@ const AppSidebar = ({ setCurrentPage, disabled, setToken,sidebarOpen,setSidebarO
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to="/report"
-            className={linkClass}
-            onClick={() => { handleNavClick("report"); setSidebarOpen(false); }}
-          >
-            Report
+
+          <NavLink to="/AnalyticsScreen" className={linkClass}>
+            Analytics
+
+
           </NavLink>
         </li>
         <li>

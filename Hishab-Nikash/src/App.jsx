@@ -5,17 +5,26 @@ import Topbar from "./Components/Topbar";
 import Dashboard from "./Pages/Dashboard";
 import Budget from "./Pages/Budget";
 import TransactionPage from "./Pages/TransactionPage";
-import Report from "./Pages/Report";
+import AnalyticsScreen from "./Pages/AnalyticsScreen";
 import Profile from "./Pages/Profile";
 import Settings from "./Pages/Settings";
+import About from "./Pages/About"; 
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+
+
+//import { AnalyticsScreen } from "./Pages/AnalyticsScreen";
+
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Startup from "./Pages/Startup";
+
 import AddTransaction from "./Pages/AddTransaction";
 import Chat from './Pages/Chat';
 
+
 const App = () => {
+
+
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [token, setToken] = useState(localStorage.getItem("token")); 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,6 +34,7 @@ const App = () => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
+
 
   return (
     <Router basename="/Hishab-Nikash">
@@ -53,11 +63,6 @@ const App = () => {
           }
          
           <Routes>
-            {}
-            <Route
-              path="/"
-              element={token ? <Navigate to="/dashboard" /> : <Startup />}
-            />
 
             {}
             <Route path="/signup" element={<Signup setToken={setToken} />} />
@@ -89,10 +94,10 @@ const App = () => {
               }
             />
             <Route
-              path="/report"
+              path="/AnalyticsScreen"
               element={
                 <ProtectedRoute token={token}>
-                  <Report />
+                  <AnalyticsScreen />
                 </ProtectedRoute>
               }
             />
@@ -109,6 +114,14 @@ const App = () => {
               element={
                 <ProtectedRoute token={token}>
                   <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings/about"
+              element={
+                <ProtectedRoute token={token}>
+                  <About />
                 </ProtectedRoute>
               }
             />

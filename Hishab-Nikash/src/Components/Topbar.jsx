@@ -1,34 +1,41 @@
 import React from 'react';
-import { FaBell, FaBars } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 
-const Topbar = ({ currentPage, disabled, setSidebarOpen }) => {
+import { FaBell } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom'; 
+
+const Topbar = () => {
+  const location = useLocation(); 
+
+  const [currentPage, setCurrentPage] = useState('Transactions');
   const navigate = useNavigate();
 
+
   const getPageTitle = () => {
-    if (disabled) return "Welcome";
-    switch (currentPage.toLowerCase()) {
-      case "transactions": return "Transactions";
-      case "dashboard": return "Dashboard";
-      case "budget": return "Budget";
-      case "report": return "Report";
-      case "profile": return "Profile";
-      case "settings": return "Settings";
-      default: return "Page Title";
-    }
+    switch (location.pathname) {
+      case '/':
+        return 'Dashboard';
+      case '/transactionPage':
+        return 'Transactions';
+      case '/budget':
+        return 'Budget';
+      case '/AnalyticsScreen':
+        return 'AnalyticsScreen';
+      case '/profile':
+        return 'Profile';
+      case '/settings':
+        return 'Settings';
+      case '/settings/about':
+        return 'About Hishab Nikash';
+      default:
+        return 'Page Title'; 
+  }
   };
 
   return (
-    <div className="bg-white shadow-md p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-      {}
-      <div className="flex items-center gap-3 w-full sm:w-auto">
-        <button 
-          className="md:hidden p-2 border border-black rounded-md"
-          onClick={() => setSidebarOpen(true)}
-        >
-          <FaBars />
-        </button>
-        <h1 className="text-sm font-semibold text-gray-800">{getPageTitle()}</h1>
+    <div className="bg-white shadow-md p-4 flex justify-between items-center">
+      <div className="text-sm font-semibold text-gray-800">
+        <h1>{getPageTitle()}</h1> 
+
       </div>
 
       {}
