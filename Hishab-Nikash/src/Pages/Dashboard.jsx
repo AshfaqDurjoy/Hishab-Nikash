@@ -1,7 +1,7 @@
 import React from "react";
-import { FaFilter, FaCalendarAlt } from "react-icons/fa";
+import { FaFilter, FaCalendarAlt, FaRobot } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown, HiCurrencyBangladeshi, HiCalendar } from "react-icons/hi";
-
+import { useNavigate } from "react-router-dom";
 const transactions = [
   {
     id: 1,
@@ -60,6 +60,12 @@ const categoryColors = {
 };
 
 const Dashboard = () => {
+   const navigate = useNavigate();
+
+  const openChat = () => {
+   
+    navigate("/chat");
+  };
   return (
     <div className="max-w-5xl mx-auto p-8">
       {/* Filters */}
@@ -136,6 +142,12 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+      <button
+        onClick={openChat}
+        className="fixed bottom-4 right-4 bg-black hover:bg-gray-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center z-50"
+      >
+        <FaRobot className="w-6 h-5" />
+      </button>
     </div>
   );
 };
