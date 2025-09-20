@@ -108,10 +108,21 @@ const App = () => {
               }
             />
              <Route
+
               path="/chat"
               element={
                 <ProtectedRoute token={token}>
                   <Chat />
+                  </ProtectedRoute>
+              }
+            />
+           
+              <Route
+              path="/add-transaction"
+              element={
+                <ProtectedRoute token={token}>
+                  <AddTransaction />
+
                 </ProtectedRoute>
               }
             />

@@ -3,7 +3,7 @@
 use App\Http\Controllers\front\AccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TransactionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,3 +26,9 @@ Route::post('chat', [App\Http\Controllers\ChatController::class, 'chat']);
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
+Route::get('/transactions', [TransactionController::class, 'index']);
+Route::post('/add-transaction', [TransactionController::class, 'store']);
+
+
+
