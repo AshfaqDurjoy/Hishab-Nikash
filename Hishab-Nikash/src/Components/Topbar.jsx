@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { FaBell } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom'; 
 
@@ -34,23 +35,31 @@ const Topbar = () => {
     <div className="bg-white shadow-md p-4 flex justify-between items-center">
       <div className="text-sm font-semibold text-gray-800">
         <h1>{getPageTitle()}</h1> 
+
       </div>
 
-      <div className="flex items-center space-x-4">
+      {}
+      <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
         <input
           type="text"
-          placeholder="Search..."
-          className="px-4 py-2 border border-black rounded-md text-sm text-gray-700 w-64 bg-gray-200"
+          placeholder={disabled ? "Login required" : "Search..."}
+          className={`px-4 py-2 border border-black rounded-md text-sm text-gray-700 w-full sm:w-64 ${
+            disabled ? "bg-gray-100 cursor-not-allowed opacity-50" : "bg-gray-200"
+          }`}
+          disabled={disabled}
         />
-        <button className="bg-white border border-black p-2 rounded-full">
-          <FaBell className="text-black" />
-        </button>
-        <button 
-        onClick={ () => navigate ( "/add-transaction")} 
-        className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer hover:bg-blue-700"
-        >
-          + Add Transaction
-        </button>
+        <div className="flex items-center gap-3">
+          <button className={`bg-white border border-black p-2 rounded-full ${disabled ? "cursor-not-allowed opacity-50" : ""}`} disabled={disabled}>
+            <FaBell className="text-black" />
+          </button>
+          <button
+            onClick={() => navigate("/add-transaction")}
+            className={`px-4 py-2 rounded-md text-sm ${disabled ? "bg-gray-300 text-gray-600 cursor-not-allowed opacity-50" : "bg-black text-white"}`}
+            disabled={disabled}
+          >
+            + Add Transaction
+          </button>
+        </div>
       </div>
     </div>
   );

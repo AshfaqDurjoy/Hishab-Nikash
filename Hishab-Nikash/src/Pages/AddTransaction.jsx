@@ -26,7 +26,7 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/add-transaction", {
+      const res = await fetch("http://127.0.0.1:8000/api/add-transaction", {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -42,7 +42,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
       console.log("Backend response:", data);
 
       if (res.ok) {
-        // alert
         alert("Transaction Added Successfully!");
 
         if (typeof onAdd === "function") {
@@ -52,16 +51,14 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
             amount: Number(formData.amount),
             type: formData.type,
             category: formData.category,
-            timestamp: new Date().toLocaleString(),
+            created_at: new Date().toISOString(), 
           };
           onAdd(newTx);
         }
 
-        //Reset
         setFormData({ title: "", amount: "", type: "", category: "" });
 
       } else {
-        //error
         console.error("Error saving transaction:", data);
         alert("Error saving transaction! Check console.");
       }
@@ -77,7 +74,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Transaction</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {}
         <div>
           <label className="block text-sm font-medium text-gray-700">Title</label>
           <input
@@ -90,7 +86,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
           />
         </div>
 
-        {}
         <div>
           <label className="block text-sm font-medium text-gray-700">Amount</label>
           <input
@@ -103,7 +98,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
           />
         </div>
 
-        {}
         <div className="relative">
           <label className="block text-sm font-medium text-gray-700">Type</label>
           <div
@@ -125,7 +119,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
           )}
         </div>
 
-        {}
         <div className="relative">
           <label className="block text-sm font-medium text-gray-700">Category</label>
           <div className="w-full border border-gray-400 rounded-md px-3 py-2 flex justify-between items-center cursor-pointer"
@@ -145,7 +138,6 @@ const AddTransaction = ({ onAdd, userId = 1 }) => {
           )}
         </div>
 
-        {}
         <button type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm w-full cursor-pointer hover:bg-blue-700">
           Save Transaction

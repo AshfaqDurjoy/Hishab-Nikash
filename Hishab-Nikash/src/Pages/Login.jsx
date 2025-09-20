@@ -1,41 +1,72 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { apiUrl } from "../Components/Config.jsx"; // adjust path if needed
 
-const Login = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
+const Login = ({ setToken }) => { // ✅ receive setToken from App.jsx
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [isBlinking, setIsBlinking] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData,
-            [e.target.name]: e.target.value 
-        });
-    };
+    setLoading(true);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    try {
+      const response = await fetch(`${apiUrl}login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        console.log("Login Data:", formData);
+      const data = await response.json();
 
-        setIsBlinking(true) ; 
-        setTimeout( () => setIsBlinking(false),300);
+      if (response.ok) {
+        // Save token + user in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
 
-        alert("Login Done!");
+        // ✅ update App state
+        if (setToken) setToken(data.token);
 
-        setFormData({
-            email: "",
-            password: "",
-        });
+        alert("Login successful 🎉");
 
-        navigate("/");
-    };
-    return (
+        // Reset form
+        setFormData({ email: "", password: "" });
+
+        // Redirect to dashboard
+        navigate("/dashboard");
+      } else {
+        alert(data.message || "Invalid credentials. Try again!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false);
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 300);
+    }
+  };
+
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
@@ -74,15 +105,16 @@ const Login = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className={`w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 ${
               isBlinking ? "animate-pulse" : ""
-            }`}
+            } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <p className="text-center text-gray-500 mt-4">
-          Don't have an account?{" "}
+          Don’t have an account?{" "}
           <span
             className="text-blue-500 cursor-pointer hover:underline"
             onClick={() => navigate("/signup")}
