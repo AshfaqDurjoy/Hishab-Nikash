@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const AppSidebar = ({ setCurrentPage, disabled, setToken }) => {
+const AppSidebar = ({ setCurrentPage, disabled, setToken,sidebarOpen,setSidebarOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -21,7 +21,21 @@ const AppSidebar = ({ setCurrentPage, disabled, setToken }) => {
   };
 
   return (
-    <div className="bg-gray-800 text-white w-64 h-full fixed top-0 left-0 p-4 flex flex-col">
+  <>
+    {}
+    {sidebarOpen && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+        onClick={() => setSidebarOpen(false)}
+      />
+    )}
+
+    {}
+    <div
+      className={`fixed inset-y-0 left-0 w-64 bg-gray-800 text-white p-4 flex flex-col transform 
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+        md:translate-x-0 transition-transform duration-200 ease-in-out z-50`}
+    >
       <div className="flex flex-col items-start mb-8">
         <h2 className="text-xl font-extrabold">Hishab Nikash</h2>
         <h1 className="text-m font-semibold mt-2">Your Personal Finance App</h1>
@@ -29,32 +43,56 @@ const AppSidebar = ({ setCurrentPage, disabled, setToken }) => {
 
       <ul className="flex-1">
         <li>
-          <NavLink to="/dashboard" className={linkClass} onClick={() => handleNavClick("dashboard")}>
+          <NavLink
+            to="/dashboard"
+            className={linkClass}
+            onClick={() => { handleNavClick("dashboard"); setSidebarOpen(false); }}
+          >
             Dashboard
           </NavLink>
         </li>
         <li>
-          <NavLink to="/transactionPage" className={linkClass} onClick={() => handleNavClick("transactions")}>
+          <NavLink
+            to="/transactionPage"
+            className={linkClass}
+            onClick={() => { handleNavClick("transactions"); setSidebarOpen(false); }}
+          >
             Transaction
           </NavLink>
         </li>
         <li>
-          <NavLink to="/report" className={linkClass} onClick={() => handleNavClick("report")}>
+          <NavLink
+            to="/report"
+            className={linkClass}
+            onClick={() => { handleNavClick("report"); setSidebarOpen(false); }}
+          >
             Report
           </NavLink>
         </li>
         <li>
-          <NavLink to="/budget" className={linkClass} onClick={() => handleNavClick("budget")}>
+          <NavLink
+            to="/budget"
+            className={linkClass}
+            onClick={() => { handleNavClick("budget"); setSidebarOpen(false); }}
+          >
             Budget
           </NavLink>
         </li>
         <li>
-          <NavLink to="/profile" className={linkClass} onClick={() => handleNavClick("profile")}>
+          <NavLink
+            to="/profile"
+            className={linkClass}
+            onClick={() => { handleNavClick("profile"); setSidebarOpen(false); }}
+          >
             Profile
           </NavLink>
         </li>
         <li>
-          <NavLink to="/settings" className={linkClass} onClick={() => handleNavClick("settings")}>
+          <NavLink
+            to="/settings"
+            className={linkClass}
+            onClick={() => { handleNavClick("settings"); setSidebarOpen(false); }}
+          >
             Settings
           </NavLink>
         </li>
@@ -70,7 +108,9 @@ const AppSidebar = ({ setCurrentPage, disabled, setToken }) => {
         Logout
       </button>
     </div>
-  );
+  </>
+);
+
 };
 
 export default AppSidebar;

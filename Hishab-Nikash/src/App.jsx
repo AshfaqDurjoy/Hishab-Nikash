@@ -18,7 +18,7 @@ import Chat from './Pages/Chat';
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [token, setToken] = useState(localStorage.getItem("token")); 
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   useEffect(() => {
     const handleStorageChange = () => setToken(localStorage.getItem("token"));
@@ -29,21 +29,26 @@ const App = () => {
   return (
     <Router basename="/Hishab-Nikash">
 
-      <div className="flex">
+      <div className="flex h-screen bg-gray-100">
         {token && (
            <AppSidebar 
            setCurrentPage={setCurrentPage} 
            disabled={!token} 
-           setToken={setToken} />
+           setToken={setToken} 
+           sidebarOpen={sidebarOpen}
+           setSidebarOpen={setSidebarOpen}
+           />
         )}
        
 
-        <div className={`${token ? "ml-64" : ""} bg-gray-100 w-full`}>
+        <div className={`flex-1 flex flex-col ${token ? "md:ml-64" : ""} `}>
 
 
           {token && 
            <Topbar currentPage={currentPage} 
-           disabled={!token} />
+           disabled={!token} 
+           setSidebarOpen={setSidebarOpen}
+           />
 
           }
          
