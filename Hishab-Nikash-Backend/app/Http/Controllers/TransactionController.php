@@ -8,12 +8,16 @@ use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index($userId)
     {
-        $transactions = DB::table('transactions')->orderBy('created_at', 'desc')->get();
+        $transactions = DB::table('transactions')
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return response()->json($transactions);
     }
-
+   
     public function store(Request $request)
     {
         $data = $request->validate([

@@ -4,6 +4,7 @@ use App\Http\Controllers\front\AccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,8 +28,13 @@ Route::post('chat', [App\Http\Controllers\ChatController::class, 'chat']);
     return $request->user();
 });*/
 
-Route::get('/transactions', [TransactionController::class, 'index']);
+//Route::get('/transactions', [TransactionController::class, 'index']);
+//Route::post('/add-transaction', [TransactionController::class, 'store']);
+
+Route::post('/add-category', [CategoryController::class, 'store']);
+Route::get('/user-categories/{userId}', [CategoryController::class, 'userCategories']);
+
+
+Route::get('/transactions/{userId}', [TransactionController::class, 'index']);
+
 Route::post('/add-transaction', [TransactionController::class, 'store']);
-
-
-
