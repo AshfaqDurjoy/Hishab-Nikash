@@ -107,6 +107,14 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+             <Route
+              path="/add-transaction"
+              element={
+                <ProtectedRoute token={token}>
+                  <AddTransaction />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
