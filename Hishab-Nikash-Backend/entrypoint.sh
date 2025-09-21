@@ -4,6 +4,10 @@
 echo "Waiting for database connection..."
 sleep 15
 
+# Test database connection
+echo "Testing database connection..."
+php artisan migrate:status || echo "Migration status check failed, continuing..."
+
 # Clear Laravel caches
 echo "Clearing Laravel caches..."
 php artisan config:clear
@@ -21,7 +25,8 @@ fi
 echo "Running database migrations..."
 php artisan migrate --force
 
-# Seed database if needed (optional)
+# Optional: Create a default user (uncomment if needed)
+# echo "Seeding default data..."
 # php artisan db:seed --force
 
 # Cache configurations for better performance
