@@ -29,7 +29,7 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename="/Hishab-Nikash">
+    <Router basename="/Hishab-Nikash/Startup">
       <div className="flex h-screen bg-gray-100">
         {token && (
            <AppSidebar 
