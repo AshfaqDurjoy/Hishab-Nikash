@@ -180,7 +180,7 @@ const Dashboard = () => {
 useEffect(() => {
   if (!userId) return;
 
-  fetch(`http://127.0.0.1:8000/api/transactions/${userId}`)
+  fetch(`https://hishab-nikash-1.onrender.com/api/transactions/${userId}`)
     .then((res) => res.json())
     .then((data) => {
       setTransactions(data.slice(0, 4)); // first 4 transactions

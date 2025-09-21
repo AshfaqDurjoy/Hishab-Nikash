@@ -15,6 +15,9 @@ use App\Http\Controllers\CategoryController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::post('/register',[AccountController::class,'register']);
 Route::post('/login', [AccountController::class, 'login']);
@@ -30,6 +33,9 @@ Route::post('chat', [App\Http\Controllers\ChatController::class, 'chat']);
 
 //Route::get('/transactions', [TransactionController::class, 'index']);
 //Route::post('/add-transaction', [TransactionController::class, 'store']);
+Route::get("/hello", function () {
+    return response()->json(["Sucess"=>"api"]);
+});
 
 Route::post('/add-category', [CategoryController::class, 'store']);
 Route::get('/user-categories/{userId}', [CategoryController::class, 'userCategories']);
