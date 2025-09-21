@@ -15,7 +15,7 @@ const Profile = () => {
 
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/transactions/${user.id}`)
+    fetch(`https://hishab-nikash-1.onrender.com/api/transactions/${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         const totalCredit = data
