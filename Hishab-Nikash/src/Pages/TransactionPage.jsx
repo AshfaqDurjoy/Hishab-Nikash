@@ -90,7 +90,7 @@ const TransactionPage = () => {
   useEffect(() => {
     if (!userId) return;
 
-    fetch(`http://127.0.0.1:8000/api/transactions/${userId}`)
+    fetch(`https://hishab-nikash-1.onrender.com/api/transactions/${userId}`)
       .then(res => res.json())
       .then(data => setTransactions(data))
       .catch(err => console.error("Error Fetching Transactions:", err));
@@ -100,7 +100,7 @@ const TransactionPage = () => {
   useEffect(() => {
     if (!userId) return;
 
-    fetch(`http://127.0.0.1:8000/api/user-categories/${userId}`)
+    fetch(`https://hishab-nikash-1.onrender.com/api/user-categories/${userId}`)
       .then(res => res.json())
       .then(data => setCategories(data.categories))
       .catch(err => console.error("Error Fetching Categories:", err));
@@ -110,7 +110,7 @@ const TransactionPage = () => {
     if (!newCategory.trim() || categories.includes(newCategory.trim())) return;
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/add-category", {
+      const res = await fetch("https://hishab-nikash-1.onrender.com/api/add-category", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

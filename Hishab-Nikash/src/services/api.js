@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production' 
-    ? 'https://your-render-service.onrender.com/api'
+    ? 'https://hishab-nikash-1.onrender.com/api'
     : 'http://localhost:8000/api',
   withCredentials: true,
   headers: {
