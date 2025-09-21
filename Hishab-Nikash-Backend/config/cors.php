@@ -1,22 +1,12 @@
 <?php
 
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
-    
-    'allowed_methods' => ['*'],
-    
-    'allowed_origins' => [
-        'https://hishab-nikash-phi.vercel.app',
-        'http://localhost:3000', // For local development
-    ],
-    
-    'allowed_origins_patterns' => [],
-    
+
+    'paths' => ['api/*'],            // apply CORS only to API routes
+    'allowed_methods' => ['*'],      // allow GET, POST, etc.
+    'allowed_origins' => ['*'], // React dev server
     'allowed_headers' => ['*'],
-    
     'exposed_headers' => [],
-    
     'max_age' => 0,
-    
     'supports_credentials' => true,
 ];
