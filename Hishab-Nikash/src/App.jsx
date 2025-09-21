@@ -1,21 +1,19 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import AppSidebar from "./Components/AppSidebar";
 import Topbar from "./Components/Topbar";
+import Dashboard from "./Pages/Dashboard";
+import Budget from "./Pages/Budget";
+import TransactionPage from "./Pages/TransactionPage";
+import Report from "./Pages/Report";
+import Profile from "./Pages/Profile";
+import Settings from "./Pages/Settings";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 import ProtectedRoute from "./Components/ProtectedRoute";
-
-// Lazy loading pages
-const Dashboard = React.lazy(() => import("./Pages/Dashboard"));
-const Budget = React.lazy(() => import("./Pages/Budget"));
-const TransactionPage = React.lazy(() => import("./Pages/TransactionPage"));
-const Report = React.lazy(() => import("./Pages/Report"));
-const Profile = React.lazy(() => import("./Pages/Profile"));
-const Settings = React.lazy(() => import("./Pages/Settings"));
-const Login = React.lazy(() => import("./Pages/Login"));
-const Signup = React.lazy(() => import("./Pages/Signup"));
-const Startup = React.lazy(() => import("./Pages/Startup"));
-const AddTransaction = React.lazy(() => import("./Pages/AddTransaction"));
-const Chat = React.lazy(() => import("./Pages/Chat"));
+import Startup from "./Pages/Startup";
+import AddTransaction from "./Pages/AddTransaction";
+import Chat from './Pages/Chat';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -29,97 +27,115 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename="/Hishab-Nikash/Startup">
+    <Router basename="/Hishab-Nikash">
+
       <div className="flex h-screen bg-gray-100">
         {token && (
            <AppSidebar 
-             setCurrentPage={setCurrentPage} 
-             disabled={!token} 
-             setToken={setToken} 
-             sidebarOpen={sidebarOpen}
-             setSidebarOpen={setSidebarOpen}
+           setCurrentPage={setCurrentPage} 
+           disabled={!token} 
+           setToken={setToken} 
+           sidebarOpen={sidebarOpen}
+           setSidebarOpen={setSidebarOpen}
            />
         )}
+       
 
-        <div className={`flex-1 flex flex-col ${token ? "md:ml-64" : ""}`}>
-          {token && <Topbar currentPage={currentPage} disabled={!token} setSidebarOpen={setSidebarOpen} />}
+        <div className={`flex-1 flex flex-col ${token ? "md:ml-64" : ""} `}>
+
+
+          {token && 
+           <Topbar currentPage={currentPage} 
+           disabled={!token} 
+           setSidebarOpen={setSidebarOpen}
+           />
+
+          }
          
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Startup />} />
-              <Route path="/signup" element={<Signup setToken={setToken} />} />
-              <Route path="/login" element={<Login setToken={setToken} />} />
+          <Routes>
+            {}
+            <Route
+              path="/"
+              element={token ? <Navigate to="/dashboard" /> : <Startup />}
+            />
 
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Dashboard />
+            {}
+            <Route path="/signup" element={<Signup setToken={setToken} />} />
+            <Route path="/login" element={<Login setToken={setToken} />} />
+
+            {}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute token={token}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/budget"
+              element={
+                <ProtectedRoute token={token}>
+                  <Budget />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/transactionPage"
+              element={
+                <ProtectedRoute token={token}>
+                  <TransactionPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/report"
+              element={
+                <ProtectedRoute token={token}>
+                  <Report />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute token={token}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute token={token}>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+
+              path="/chat"
+              element={
+                <ProtectedRoute token={token}>
+                  <Chat />
                   </ProtectedRoute>
-                }
-              />
+              }
+            />
+           
               <Route
-                path="/budget"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Budget />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/transactionPage"
-                element={
-                  <ProtectedRoute token={token}>
-                    <TransactionPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/report"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Report />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Settings />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/chat"
-                element={
-                  <ProtectedRoute token={token}>
-                    <Chat />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/add-transaction"
-                element={
-                  <ProtectedRoute token={token}>
-                    <AddTransaction />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </Suspense>
+              path="/add-transaction"
+              element={
+                <ProtectedRoute token={token}>
+                  <AddTransaction />
+
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
         </div>
       </div>
     </Router>
+
   );
 };
-
 export default App;
