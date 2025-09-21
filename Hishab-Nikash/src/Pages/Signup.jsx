@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock, FaCheckCircle } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { apiUrl } from "../Components/Config.jsx"; // adjust path if needed
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -12,39 +20,59 @@ const Signup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (formData.password !== formData.confirmPassword) {
-        alert("Oops! Passwords do not match!");
-        return;
+    if (formData.password !== formData.confirmPassword) {
+      alert("Oops! Passwords do not match!");
+      return;
     }
 
-  console.log("Signup Data:", formData);
+    setLoading(true);
 
-    setIsBlinking(true);
-    setTimeout(() => setIsBlinking(false), 300); // stops blinking after 300ms
+    try {
+      const response = await fetch(`${apiUrl}register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
+      const data = await response.json();
 
-    alert("Signup Done!");
-
-
-    setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-
-
-    navigate("/");
-};
-
+      if (response.ok) {
+        alert("Signup successful 🎉");
+        setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+        navigate("/login"); // or home
+      } else {
+        console.error("Signup failed:", data);
+        alert(
+          data.errors
+            ? JSON.stringify(data.errors)
+            : "Signup failed. Try again!"
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false);
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 300);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -111,11 +139,12 @@ const Signup = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className={`w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 ${
               isBlinking ? "animate-pulse" : ""
-            }`}
+            } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            Sign Up
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
         <p className="text-center text-gray-500 mt-4">
