@@ -41,6 +41,9 @@ const TransactionCard = ({ transaction }) => {
         {/* info */}
         <div>
           <div className="font-semibold">{transaction.title}</div>
+           <div className="text-sm text-gray-600 italic">
+            {transaction.category}
+          </div>
           <div className="text-sm text-gray-500">{transaction.timestamp}</div>
         </div>
       </div>

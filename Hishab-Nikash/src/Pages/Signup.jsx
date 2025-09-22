@@ -37,7 +37,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}register`, {
+      const response = await fetch(`https://hishab-nikash-1.onrender.com/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

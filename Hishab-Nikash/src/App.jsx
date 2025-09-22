@@ -27,7 +27,7 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename="/Hishab-Nikash">
+    <Router basename="/">
 
       <div className="flex h-screen bg-gray-100">
         {token && (

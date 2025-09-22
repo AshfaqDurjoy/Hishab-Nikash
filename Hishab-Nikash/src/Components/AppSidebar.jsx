@@ -69,15 +69,7 @@ const AppSidebar = ({ setCurrentPage, disabled, setToken,sidebarOpen,setSidebarO
             Report
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/budget"
-            className={linkClass}
-            onClick={() => { handleNavClick("budget"); setSidebarOpen(false); }}
-          >
-            Budget
-          </NavLink>
-        </li>
+        
         <li>
           <NavLink
             to="/profile"
