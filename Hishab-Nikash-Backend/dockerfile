@@ -1,48 +1,36 @@
-FROM php:8.1-apache
+# Start with the Bitnami Laravel image.
+FROM bitnami/laravel:10-debian-11
 
-# Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# --- Install Node.js for the frontend build ---
+# Install curl to download the Node.js setup script
+USER root
+RUN apt-get update && apt-get install -y curl && apt-get clean
+# Set up and install Node.js v18
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+# Switch back to the non-root user
+#USER 1001
+# --- End Node.js Install ---
 
+# Set the working directory
+WORKDIR /app
 
-# Enable Apache modules
-RUN a2enmod rewrite headers
+# Copy your application code into the image
+COPY . .
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install your project's specific Composer dependencies
+RUN composer install --optimize-autoloader --no-dev
 
-# Set working directory
-WORKDIR /var/www/html
+# --- Frontend Build Steps ---
+# Install JavaScript dependencies
+RUN npm install
+# Build the production assets (this creates the manifest.json file)
+RUN npm run build
+# --- End Frontend Build ---
 
-# Copy existing application directory contents
-COPY . /var/www/html
+# Create the specific directories Laravel needs for caching.
+RUN mkdir -p /app/storage/framework/views /app/bootstrap/cache
 
-# Copy custom Apache configuration
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
-
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
-
-# Copy entrypoint script
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Expose port 80
-EXPOSE 80
-
-# Use custom entrypoint
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# This is a bitnami-specific step to ensure permissions are correct for ALL files,
+# including the new directories and the frontend build artifacts.
+RUN chown -R 1001:1001 /app
