@@ -37,6 +37,10 @@ Route::get("/hello", function () {
     return response()->json(["Sucess"=>"api"]);
 });
 
+Route::options('/{any}', function () {
+    return response()->noContent(204);
+})->where('any', '.*');
+
 Route::post('/add-category', [CategoryController::class, 'store']);
 Route::get('/user-categories/{userId}', [CategoryController::class, 'userCategories']);
 
